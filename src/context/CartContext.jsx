@@ -4,35 +4,27 @@ const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
+  const [krama, setKrama] = useState(null);
 
-  const addToCart = (product) => {
-    setCart((prevCart) => {
-      const existing = prevCart.find((item) => item.id === product.id);
-      if (existing) {
-        // kalau produk sudah ada, tambahkan qty
-        return prevCart.map((item) =>
-          item.id === product.id
-            ? { ...item, qty: item.qty + 1 }
-            : item
-        );
-      } else {
-      // kalau produk baru, tambahkan dengan qty = 1
-      return [...prevCart, { ...product, qty: 1 }];
-      }
-    });
+  const addToCart = (item) => {
+    if (!cart.find((c) => c.id === item.id)) {
+      setCart([...cart, item]);
+    }
   };
 
   const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+    setCart(cart.filter((c) => c.id !== id));
   };
 
+  const clearCart = () => setCart([]);
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, clearCart, krama, setKrama }}
+    >
       {children}
     </CartContext.Provider>
   );
 }
 
-export function useCart() {
-  return useContext(CartContext);
-}
+export const useCart = () => useContext(CartContext);
