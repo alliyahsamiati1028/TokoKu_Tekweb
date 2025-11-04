@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login.jsx";
 import Home from "./pages/Home.jsx";
 import Checkout from "./pages/Checkout.jsx";
-import Login from "./pages/Login.jsx";
 import { useEffect, useState } from "react";
 
 export default function App() {
