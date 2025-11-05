@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import { useState } from "react";
 import { useProducts } from "../context/ProductContext";
 import { useCart } from "../context/CartContext";
@@ -13,7 +12,7 @@ export default function Home() {
   const [filtered, setFiltered] = useState([]);
   const [userData, setUserData] = useState(null);
 
-  // Data contoh warga (bisa kamu ganti dari database nanti)
+  // Data dummy warga
   const wargaData = [
     { nik: "1234567890123456", nama: "I Made Budi", gender: "Laki-laki", status: "Tetap" },
     { nik: "9876543210987654", nama: "Ni Luh Ayu", gender: "Perempuan", status: "Pendatang" },
@@ -66,7 +65,7 @@ export default function Home() {
       </div>
 
       {/* KONTEN UTAMA */}
-      <div className="flex-1 p-8">
+      <div className="flex-1 flex flex-col justify-center items-center p-8">
         <h1 className="text-3xl font-semibold mb-8 text-gray-800 text-center">
           Pembayaran Iuran Krama Desa
         </h1>
@@ -78,7 +77,7 @@ export default function Home() {
             placeholder="Masukkan NIK"
             value={nik}
             onChange={(e) => setNik(e.target.value)}
-            className="border border-gray-300 rounded-lg px-4 py-2 w-1/2 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="border border-gray-300 rounded-lg px-4 py-2 w-80 focus:ring-2 focus:ring-blue-500 outline-none"
           />
           <button
             onClick={handleSearch}

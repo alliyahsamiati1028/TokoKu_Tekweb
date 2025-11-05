@@ -4,22 +4,36 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  // "Database" user sementara (contoh)
+  const users = [
+    { email: "admin@gmail.com", password: "123456" },
+    { email: "user@gmail.com", password: "password" },
+  ];
 
   const handleLogin = (e) => {
     e.preventDefault();
 
     if (email.trim() === "" || password.trim() === "") {
-      alert("Email dan password tidak boleh kosong!");
+      setError("Email dan password tidak boleh kosong!");
       return;
     }
 
-    // Simpan user ke localStorage (anggap login berhasil)
-    localStorage.setItem("user", JSON.stringify({ email }));
+    // Cek apakah email & password cocok dengan data "database"
+    const user = users.find(
+      (u) => u.email === email && u.password === password
+    );
 
-    // Arahkan langsung ke halaman checkout
-    navigate("/Home");
-    window.location.reload(); // supaya App.jsx tahu user sudah login
+    if (user) {
+      // Simpan user ke localStorage
+      localStorage.setItem("user", JSON.stringify({ email }));
+      navigate("/home");
+      window.location.reload();
+    } else {
+      setError("Email atau password salah!");
+    }
   };
 
   return (
@@ -30,31 +44,35 @@ export default function Login() {
         </h2>
 
         <form onSubmit={handleLogin}>
+          {error && (
+            <p className="text-red-500 text-center text-sm mb-3">{error}</p>
+          )}
+
           <input
             type="email"
-            placeholder="Masukkan email (bebas)"
+            placeholder="Masukkan email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full p-2 border rounded-md mb-3"
+            required
           />
+
           <input
             type="password"
-            placeholder="Masukkan password (bebas)"
+            placeholder="Masukkan password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2 border rounded-md mb-4"
+            required
           />
+
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
           >
             Login
           </button>
         </form>
-
-        <p className="text-center text-sm text-gray-500 mt-3">
-          (Gunakan email & password apa saja untuk masuk)
-        </p>
       </div>
     </div>
   );

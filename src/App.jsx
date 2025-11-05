@@ -20,25 +20,25 @@ export default function App() {
 
   return (
     <Routes>
-      {/* 👇 Saat pertama buka '/', arahkan ke login dulu */}
+      {/* Saat pertama buka '/', arahkan ke login dulu */}
       <Route
         path="/"
         element={user ? <Navigate to="/home" /> : <Navigate to="/login" />}
       />
 
-      {/* 🔒 Halaman utama pembayaran (harus login) */}
+      {/* Halaman utama pembayaran (harus login) */}
       <Route
         path="/home"
         element={user ? <Home /> : <Navigate to="/login" replace />}
       />
 
-      {/* 🔒 Halaman checkout juga hanya bisa diakses kalau login */}
+      {/* Halaman checkout juga hanya bisa diakses kalau login */}
       <Route
         path="/checkout"
         element={user ? <Checkout /> : <Navigate to="/login" replace />}
       />
 
-      {/* 🧑‍💻 Halaman login bebas diakses */}
+      {/* Halaman login bebas diakses */}
       <Route path="/login" element={<Login />} />
     </Routes>
   );
